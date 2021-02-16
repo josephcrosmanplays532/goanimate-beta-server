@@ -1,0 +1,648 @@
+<html lang="en" class="fontawesome-i2svg-active fontawesome-i2svg-complete"><script type="text/javascript" class="__REQUESTLY__SCRIPT">(function(namespace) {
+  window[namespace] = window[namespace] || {};
+  window[namespace].responseRules = {};
+
+  let open = XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open = function(method) {
+    this.addEventListener('readystatechange', function() {
+      if (this.readyState === 4 && window[namespace].responseRules.hasOwnProperty(this.responseURL)) {
+        const responseRule = window[namespace].responseRules[this.responseURL];
+        const {response, id} = responseRule;
+        const responseType = this.responseType;
+        let customResponse;
+
+        customResponse = response.type === 'code' ? responseRule.evaluator({
+            method,
+            url: this.responseURL,
+            requestHeaders: this.requestHeaders,
+            requestData: this.requestData,
+            responseType: this.responseType,
+            response: this.response
+          }) : response.value;
+
+        Object.defineProperty(this, 'response', {
+          get: function () {
+            if (response.type === 'static' && responseType === 'json') {
+              return JSON.parse(customResponse);
+            }
+            return customResponse;
+          }
+        });
+
+        if (responseType === '' || responseType === 'text') {
+          Object.defineProperty(this, 'responseText', {
+            get: function () {
+              return customResponse;
+            }
+          });
+        }
+
+        window.postMessage({
+          from: 'requestly',
+          type: 'response_rule_applied',
+          id
+        }, window.location.href);
+      }
+    }, false);
+    open.apply(this, arguments);
+  };
+
+  let send = XMLHttpRequest.prototype.send;
+  XMLHttpRequest.prototype.send = function(data) {
+    this.requestData = data;
+    send.apply(this, arguments);
+  };
+
+  let setRequestHeader = XMLHttpRequest.prototype.setRequestHeader;
+  XMLHttpRequest.prototype.setRequestHeader = function(header, value) {
+    this.requestHeaders = this.requestHeaders || {};
+    this.requestHeaders[header] = value;
+    setRequestHeader.apply(this, arguments);
+  }
+})('__REQUESTLY__')</script><head><style type="text/css">svg:not(:root).svg-inline--fa {
+  overflow: visible;
+}
+
+.svg-inline--fa {
+  display: inline-block;
+  font-size: inherit;
+  height: 1em;
+  overflow: visible;
+  vertical-align: -0.125em;
+}
+.svg-inline--fa.fa-lg {
+  vertical-align: -0.225em;
+}
+.svg-inline--fa.fa-w-1 {
+  width: 0.0625em;
+}
+.svg-inline--fa.fa-w-2 {
+  width: 0.125em;
+}
+.svg-inline--fa.fa-w-3 {
+  width: 0.1875em;
+}
+.svg-inline--fa.fa-w-4 {
+  width: 0.25em;
+}
+.svg-inline--fa.fa-w-5 {
+  width: 0.3125em;
+}
+.svg-inline--fa.fa-w-6 {
+  width: 0.375em;
+}
+.svg-inline--fa.fa-w-7 {
+  width: 0.4375em;
+}
+.svg-inline--fa.fa-w-8 {
+  width: 0.5em;
+}
+.svg-inline--fa.fa-w-9 {
+  width: 0.5625em;
+}
+.svg-inline--fa.fa-w-10 {
+  width: 0.625em;
+}
+.svg-inline--fa.fa-w-11 {
+  width: 0.6875em;
+}
+.svg-inline--fa.fa-w-12 {
+  width: 0.75em;
+}
+.svg-inline--fa.fa-w-13 {
+  width: 0.8125em;
+}
+.svg-inline--fa.fa-w-14 {
+  width: 0.875em;
+}
+.svg-inline--fa.fa-w-15 {
+  width: 0.9375em;
+}
+.svg-inline--fa.fa-w-16 {
+  width: 1em;
+}
+.svg-inline--fa.fa-w-17 {
+  width: 1.0625em;
+}
+.svg-inline--fa.fa-w-18 {
+  width: 1.125em;
+}
+.svg-inline--fa.fa-w-19 {
+  width: 1.1875em;
+}
+.svg-inline--fa.fa-w-20 {
+  width: 1.25em;
+}
+.svg-inline--fa.fa-pull-left {
+  margin-right: 0.3em;
+  width: auto;
+}
+.svg-inline--fa.fa-pull-right {
+  margin-left: 0.3em;
+  width: auto;
+}
+.svg-inline--fa.fa-border {
+  height: 1.5em;
+}
+.svg-inline--fa.fa-li {
+  width: 2em;
+}
+.svg-inline--fa.fa-fw {
+  width: 1.25em;
+}
+
+.fa-layers svg.svg-inline--fa {
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.fa-layers {
+  display: inline-block;
+  height: 1em;
+  position: relative;
+  text-align: center;
+  vertical-align: -0.125em;
+  width: 1em;
+}
+.fa-layers svg.svg-inline--fa {
+  -webkit-transform-origin: center center;
+          transform-origin: center center;
+}
+
+.fa-layers-counter, .fa-layers-text {
+  display: inline-block;
+  position: absolute;
+  text-align: center;
+}
+
+.fa-layers-text {
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-transform-origin: center center;
+          transform-origin: center center;
+}
+
+.fa-layers-counter {
+  background-color: #ff253a;
+  border-radius: 1em;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #fff;
+  height: 1.5em;
+  line-height: 1;
+  max-width: 5em;
+  min-width: 1.5em;
+  overflow: hidden;
+  padding: 0.25em;
+  right: 0;
+  text-overflow: ellipsis;
+  top: 0;
+  -webkit-transform: scale(0.25);
+          transform: scale(0.25);
+  -webkit-transform-origin: top right;
+          transform-origin: top right;
+}
+
+.fa-layers-bottom-right {
+  bottom: 0;
+  right: 0;
+  top: auto;
+  -webkit-transform: scale(0.25);
+          transform: scale(0.25);
+  -webkit-transform-origin: bottom right;
+          transform-origin: bottom right;
+}
+
+.fa-layers-bottom-left {
+  bottom: 0;
+  left: 0;
+  right: auto;
+  top: auto;
+  -webkit-transform: scale(0.25);
+          transform: scale(0.25);
+  -webkit-transform-origin: bottom left;
+          transform-origin: bottom left;
+}
+
+.fa-layers-top-right {
+  right: 0;
+  top: 0;
+  -webkit-transform: scale(0.25);
+          transform: scale(0.25);
+  -webkit-transform-origin: top right;
+          transform-origin: top right;
+}
+
+.fa-layers-top-left {
+  left: 0;
+  right: auto;
+  top: 0;
+  -webkit-transform: scale(0.25);
+          transform: scale(0.25);
+  -webkit-transform-origin: top left;
+          transform-origin: top left;
+}
+
+.fa-lg {
+  font-size: 1.3333333333em;
+  line-height: 0.75em;
+  vertical-align: -0.0667em;
+}
+
+.fa-xs {
+  font-size: 0.75em;
+}
+
+.fa-sm {
+  font-size: 0.875em;
+}
+
+.fa-1x {
+  font-size: 1em;
+}
+
+.fa-2x {
+  font-size: 2em;
+}
+
+.fa-3x {
+  font-size: 3em;
+}
+
+.fa-4x {
+  font-size: 4em;
+}
+
+.fa-5x {
+  font-size: 5em;
+}
+
+.fa-6x {
+  font-size: 6em;
+}
+
+.fa-7x {
+  font-size: 7em;
+}
+
+.fa-8x {
+  font-size: 8em;
+}
+
+.fa-9x {
+  font-size: 9em;
+}
+
+.fa-10x {
+  font-size: 10em;
+}
+
+.fa-fw {
+  text-align: center;
+  width: 1.25em;
+}
+
+.fa-ul {
+  list-style-type: none;
+  margin-left: 2.5em;
+  padding-left: 0;
+}
+.fa-ul > li {
+  position: relative;
+}
+
+.fa-li {
+  left: -2em;
+  position: absolute;
+  text-align: center;
+  width: 2em;
+  line-height: inherit;
+}
+
+.fa-border {
+  border: solid 0.08em #eee;
+  border-radius: 0.1em;
+  padding: 0.2em 0.25em 0.15em;
+}
+
+.fa-pull-left {
+  float: left;
+}
+
+.fa-pull-right {
+  float: right;
+}
+
+.fa.fa-pull-left,
+.fas.fa-pull-left,
+.far.fa-pull-left,
+.fal.fa-pull-left,
+.fab.fa-pull-left {
+  margin-right: 0.3em;
+}
+.fa.fa-pull-right,
+.fas.fa-pull-right,
+.far.fa-pull-right,
+.fal.fa-pull-right,
+.fab.fa-pull-right {
+  margin-left: 0.3em;
+}
+
+.fa-spin {
+  -webkit-animation: fa-spin 2s infinite linear;
+          animation: fa-spin 2s infinite linear;
+}
+
+.fa-pulse {
+  -webkit-animation: fa-spin 1s infinite steps(8);
+          animation: fa-spin 1s infinite steps(8);
+}
+
+@-webkit-keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+.fa-rotate-90 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+.fa-rotate-180 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+.fa-rotate-270 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
+  -webkit-transform: rotate(270deg);
+          transform: rotate(270deg);
+}
+
+.fa-flip-horizontal {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
+  -webkit-transform: scale(-1, 1);
+          transform: scale(-1, 1);
+}
+
+.fa-flip-vertical {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
+  -webkit-transform: scale(1, -1);
+          transform: scale(1, -1);
+}
+
+.fa-flip-both, .fa-flip-horizontal.fa-flip-vertical {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
+  -webkit-transform: scale(-1, -1);
+          transform: scale(-1, -1);
+}
+
+:root .fa-rotate-90,
+:root .fa-rotate-180,
+:root .fa-rotate-270,
+:root .fa-flip-horizontal,
+:root .fa-flip-vertical,
+:root .fa-flip-both {
+  -webkit-filter: none;
+          filter: none;
+}
+
+.fa-stack {
+  display: inline-block;
+  height: 2em;
+  position: relative;
+  width: 2.5em;
+}
+
+.fa-stack-1x,
+.fa-stack-2x {
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.svg-inline--fa.fa-stack-1x {
+  height: 1em;
+  width: 1.25em;
+}
+.svg-inline--fa.fa-stack-2x {
+  height: 2em;
+  width: 2.5em;
+}
+
+.fa-inverse {
+  color: #fff;
+}
+
+.sr-only {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.sr-only-focusable:active, .sr-only-focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+}
+
+.svg-inline--fa .fa-primary {
+  fill: var(--fa-primary-color, currentColor);
+  opacity: 1;
+  opacity: var(--fa-primary-opacity, 1);
+}
+
+.svg-inline--fa .fa-secondary {
+  fill: var(--fa-secondary-color, currentColor);
+  opacity: 0.4;
+  opacity: var(--fa-secondary-opacity, 0.4);
+}
+
+.svg-inline--fa.fa-swap-opacity .fa-primary {
+  opacity: 0.4;
+  opacity: var(--fa-secondary-opacity, 0.4);
+}
+
+.svg-inline--fa.fa-swap-opacity .fa-secondary {
+  opacity: 1;
+  opacity: var(--fa-primary-opacity, 1);
+}
+
+.svg-inline--fa mask .fa-primary,
+.svg-inline--fa mask .fa-secondary {
+  fill: black;
+}
+
+.fad.fa-inverse {
+  color: #fff;
+}</style><style>body {transition: opacity ease-in 0.2s; } 
+body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; } 
+</style>
+    <title>Wayback Machine</title>
+    <script>
+    /*
+    @licstart  The following is the entire license notice for the JavaScript code in this page.
+
+    Copyright (C) 2020 Internet Archive
+
+    The JavaScript code in this page is free software: you can
+    redistribute it and/or modify it under the terms of the GNU Affero
+    General Public License as published by the Free Software
+    Foundation, either version 3 of the License, or (at your option)
+    any later version.  The code is distributed WITHOUT ANY WARRANTY;
+    without even the implied warranty of MERCHANTABILITY or FITNESS
+    FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+    As additional permission under GNU AGPL version 3 section 7, you
+    may distribute non-source (e.g., minimized or compacted) forms of
+    that code without the copy of the GNU AGPL normally required by
+    section 4, provided you include this license notice and a URL
+    through which recipients can access the Corresponding Source.
+
+    @licend  The above is the entire license notice for the JavaScript code in this page.
+    */
+    </script>
+    <script type="text/javascript">
+      window.webComponentLoaderConfig = {
+      baseUrl: 'https://archive.org',
+      version: '29e56e87'
+      }
+    </script>
+    <script src="//archive.org/includes/jquery-1.10.2.min.js?v1.10.2" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/npm/jquery-ui.min.js?v1.12.1" type="text/javascript"></script>
+    <script src="//archive.org/includes/bootstrap.min.js?v3.0.0" type="text/javascript"></script>
+    <script src="//archive.org/components/npm/clipboard/dist/clipboard.js?v=8645467e" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/regenerator-runtime-polyfill.min.js?v=8645467e" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/ie-dom-node-remove-polyfill.min.js?v=8645467e" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/polyfill.min.js?v=8645467e" type="text/javascript"></script>
+    <script src="//archive.org/includes/analytics.js?v=8645467e" type="text/javascript"></script>
+    <script src="//archive.org/components/npm/@webcomponents/webcomponentsjs/webcomponents-bundle.js?v=8645467e" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/more-facets.min.js?v=8645467e" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/ia-topnav.min.js?v=8645467e" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/npm/react/umd/react.production.min.js?v16.7.0" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/npm/react-dom/umd/react-dom.production.min.js?v16.7.0" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/archive.min.js?v=8645467e" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/areact.min.js?v=8645467e" type="text/javascript"></script>
+    <link href="//archive.org/includes/build/css/archive.min.css?v=8645467e" rel="stylesheet" type="text/css">
+    <meta property="mediatype" content="">
+    <meta property="primary_collection" content="">
+        <script src="/_static/js/raven.min.js" crossorigin="anonymous"></script>
+    <script>Raven.config('https://5588e3adb3e545248e893d6f2fc41ba2@wwwb-sentry.us.archive.org/3').install();</script>
+<script type="text/javascript">if('archive_analytics' in window){var v=archive_analytics.values;v.path='/web';v.service='wb';v.server_name='wwwb-app205.us.archive.org';v.server_ms=101;archive_analytics.send_pageview_on_load()}</script>
+    <link href="/_static/images/archive.ico" rel="shortcut icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="/_static/css/styles.css?v=TN3GQxFf">
+    <base target="_top">
+<link rel="stylesheet" type="text/css" href="/_static/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/_static/css/web.css">
+<link rel="stylesheet" type="text/css" href="/_static/css/urlquery-styles.css?v=wj3Dwbsf">
+<script type="text/javascript" src="/_static/js/jquery.dataTables.min.js?v=CDO4EHWP" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/urlquery.bundle.js?v=lOhpkBv9" charset="utf-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){new urlquery("http://www.anifire.com/animation/","http://web.archive.org/web", null)});
+</script>
+  </head>
+  <body class="navia" style="">
+    
+                    <div class="ia-banners">
+              <div class="ia-banner hidden new-lending-mechanism visible" data-campaign="new-lending-mechanism">
+        <p><a href="http://blog.archive.org/2020/06/10/temporary-national-emergency-library-to-close-2-weeks-early-returning-to-traditional-controlled-digital-lending/" rel="nofollow">See what's new with book lending at the Internet Archive</a></p>
+        <form class="banner-close" action="" method="get" data-action="ia-banner-close">
+          <fieldset>
+            <button type="submit"></button>
+          </fieldset>
+        </form>
+      </div>
+          </div>
+                    
+        <div id="topnav">
+                              <ia-topnav basehost="archive.org" config="eyJzY3JlZW5OYW1lIjoiam9zZXBoY3Jvc21hbnBsYXlzIiwidXNlcm5hbWUiOiJqb3NlcGhjcm9zbWFucGxheXMiLCJ1cGxvYWRVUkwiOiJodHRwczpcL1wvYXJjaGl2ZS5vcmdcL2NyZWF0ZSIsImV2ZW50Q2F0ZWdvcnkiOiJUb3BOYXYiLCJ3YXliYWNrUGFnZXNBcmNoaXZlZCI6IjUzOCBiaWxsaW9uIiwiaXNBZG1pbiI6MCwiaGlkZVNlYXJjaCI6ZmFsc2V9" menus="eyJhdWRpbyI6eyJoZWFkaW5nIjoiSW50ZXJuZXQgQXJjaGl2ZSBBdWRpbyIsImljb25MaW5rcyI6W3siaWNvbiI6Imh0dHBzOlwvXC9hcmNoaXZlLm9yZ1wvc2VydmljZXNcL2ltZ1wvZXRyZWUiLCJ0aXRsZSI6IkxpdmUgTXVzaWMgQXJjaGl2ZSIsInVybCI6IlwvZGV0YWlsc1wvZXRyZWUifSx7Imljb24iOiJodHRwczpcL1wvYXJjaGl2ZS5vcmdcL3NlcnZpY2VzXC9pbWdcL2xpYnJpdm94YXVkaW8iLCJ0aXRsZSI6IkxpYnJpdm94IEZyZWUgQXVkaW8iLCJ1cmwiOiJcL2RldGFpbHNcL2xpYnJpdm94YXVkaW8ifV0sImZlYXR1cmVkTGlua3MiOlt7InRpdGxlIjoiQWxsIGF1ZGlvIiwidXJsIjoiXC9kZXRhaWxzXC9hdWRpbyJ9LHsidGl0bGUiOiJUaGlzIEp1c3QgSW4iLCJ1cmwiOiJcL3NlYXJjaC5waHA/cXVlcnk9bWVkaWF0eXBlOmF1ZGlvJnNvcnQ9LXB1YmxpY2RhdGUifSx7InRpdGxlIjoiR3JhdGVmdWwgRGVhZCIsInVybCI6IlwvZGV0YWlsc1wvR3JhdGVmdWxEZWFkIn0seyJ0aXRsZSI6Ik5ldGxhYmVscyIsInVybCI6IlwvZGV0YWlsc1wvbmV0bGFiZWxzIn0seyJ0aXRsZSI6Ik9sZCBUaW1lIFJhZGlvIiwidXJsIjoiXC9kZXRhaWxzXC9vbGR0aW1lcmFkaW8ifSx7InRpdGxlIjoiNzggUlBNcyBhbmQgQ3lsaW5kZXIgUmVjb3JkaW5ncyIsInVybCI6IlwvZGV0YWlsc1wvNzhycG0ifV0sImxpbmtzIjpbeyJ0aXRsZSI6IkF1ZGlvIEJvb2tzICYgUG9ldHJ5IiwidXJsIjoiXC9kZXRhaWxzXC9hdWRpb19ib29rc3BvZXRyeSJ9LHsidGl0bGUiOiJDb21wdXRlcnMsIFRlY2hub2xvZ3kgYW5kIFNjaWVuY2UiLCJ1cmwiOiJcL2RldGFpbHNcL2F1ZGlvX3RlY2gifSx7InRpdGxlIjoiTXVzaWMsIEFydHMgJiBDdWx0dXJlIiwidXJsIjoiXC9kZXRhaWxzXC9hdWRpb19tdXNpYyJ9LHsidGl0bGUiOiJOZXdzICYgUHVibGljIEFmZmFpcnMiLCJ1cmwiOiJcL2RldGFpbHNcL2F1ZGlvX25ld3MifSx7InRpdGxlIjoiTm9uLUVuZ2xpc2ggQXVkaW8iLCJ1cmwiOiJcL2RldGFpbHNcL2F1ZGlvX2ZvcmVpZ24ifSx7InRpdGxlIjoiU3Bpcml0dWFsaXR5ICYgUmVsaWdpb24iLCJ1cmwiOiJcL2RldGFpbHNcL2F1ZGlvX3JlbGlnaW9uIn0seyJ0aXRsZSI6IlBvZGNhc3RzIiwidXJsIjoiXC9kZXRhaWxzXC9wb2RjYXN0cyJ9LHsidGl0bGUiOiJSYWRpbyBOZXdzIEFyY2hpdmUiLCJ1cmwiOiJcL2RldGFpbHNcL3JhZGlvIn1dfSwiaW1hZ2VzIjp7ImhlYWRpbmciOiJJbWFnZXMiLCJpY29uTGlua3MiOlt7Imljb24iOiJodHRwczpcL1wvYXJjaGl2ZS5vcmdcL3NlcnZpY2VzXC9pbWdcL21ldHJvcG9saXRhbm11c2V1bW9mYXJ0LWdhbGxlcnkiLCJ0aXRsZSI6Ik1ldHJvcG9saXRhbiBNdXNldW0iLCJ1cmwiOiJcL2RldGFpbHNcL21ldHJvcG9saXRhbm11c2V1bW9mYXJ0LWdhbGxlcnkifSx7Imljb24iOiJodHRwczpcL1wvYXJjaGl2ZS5vcmdcL3NlcnZpY2VzXC9pbWdcL2Jyb29rbHlubXVzZXVtIiwidGl0bGUiOiJCcm9va2x5biBNdXNldW0iLCJ1cmwiOiJcL2RldGFpbHNcL2Jyb29rbHlubXVzZXVtIn1dLCJmZWF0dXJlZExpbmtzIjpbeyJ0aXRsZSI6IkFsbCBpbWFnZXMiLCJ1cmwiOiJcL2RldGFpbHNcL2ltYWdlIn0seyJ0aXRsZSI6IlRoaXMgSnVzdCBJbiIsInVybCI6Ilwvc2VhcmNoLnBocD9xdWVyeT1tZWRpYXR5cGU6aW1hZ2Umc29ydD0tcHVibGljZGF0ZSJ9LHsidGl0bGUiOiJGbGlja3IgQ29tbW9ucyIsInVybCI6IlwvZGV0YWlsc1wvZmxpY2tyY29tbW9ucyJ9LHsidGl0bGUiOiJPY2N1cHkgV2FsbCBTdHJlZXQgRmxpY2tyIiwidXJsIjoiXC9kZXRhaWxzXC9mbGlja3Itb3dzIn0seyJ0aXRsZSI6IkNvdmVyIEFydCIsInVybCI6IlwvZGV0YWlsc1wvY292ZXJhcnRhcmNoaXZlIn0seyJ0aXRsZSI6IlVTR1MgTWFwcyIsInVybCI6IlwvZGV0YWlsc1wvbWFwc191c2dzIn1dLCJsaW5rcyI6W3sidGl0bGUiOiJOQVNBIEltYWdlcyIsInVybCI6IlwvZGV0YWlsc1wvbmFzYSJ9LHsidGl0bGUiOiJTb2xhciBTeXN0ZW0gQ29sbGVjdGlvbiIsInVybCI6IlwvZGV0YWlsc1wvc29sYXJzeXN0ZW1jb2xsZWN0aW9uIn0seyJ0aXRsZSI6IkFtZXMgUmVzZWFyY2ggQ2VudGVyIiwidXJsIjoiXC9kZXRhaWxzXC9hbWVzcmVzZWFyY2hjZW50ZXJpbWFnZWxpYnJhcnkifV19LCJtb3JlIjpbeyJ0aXRsZSI6IkFib3V0IiwidXJsIjoiXC9hYm91dFwvIn0seyJ0aXRsZSI6IkJsb2ciLCJ1cmwiOiJodHRwczpcL1wvYmxvZy5hcmNoaXZlLm9yZ1wvIn0seyJ0aXRsZSI6IlByb2plY3RzIiwidXJsIjoiXC9wcm9qZWN0c1wvIn0seyJ0aXRsZSI6IkhlbHAiLCJ1cmwiOiJcL2Fib3V0XC9mYXFzLnBocCJ9LHsidGl0bGUiOiJEb25hdGUiLCJ1cmwiOiJcL2RvbmF0ZT9vcmlnaW49d2J3d3ctVG9wTmF2RG9uYXRlQnV0dG9uIn0seyJ0aXRsZSI6IkNvbnRhY3QiLCJ1cmwiOiJcL2Fib3V0XC9jb250YWN0LnBocCJ9LHsidGl0bGUiOiJKb2JzIiwidXJsIjoiXC9hYm91dFwvam9icy5waHAifSx7InRpdGxlIjoiVm9sdW50ZWVyIiwidXJsIjoiXC9hYm91dFwvdm9sdW50ZWVycG9zaXRpb25zLnBocCJ9LHsidGl0bGUiOiJQZW9wbGUiLCJ1cmwiOiJcL2Fib3V0XC9iaW9zLnBocCJ9XSwic29mdHdhcmUiOnsiaGVhZGluZyI6IlNvZnR3YXJlIiwiaWNvbkxpbmtzIjpbeyJpY29uIjoiaHR0cHM6XC9cL2FyY2hpdmUub3JnXC9zZXJ2aWNlc1wvaW1nXC9pbnRlcm5ldGFyY2FkZSIsInRpdGxlIjoiSW50ZXJuZXQgQXJjYWRlIiwidXJsIjoiXC9kZXRhaWxzXC9pbnRlcm5ldGFyY2FkZSJ9LHsiaWNvbiI6Imh0dHBzOlwvXC9hcmNoaXZlLm9yZ1wvc2VydmljZXNcL2ltZ1wvY29uc29sZWxpdmluZ3Jvb20iLCJ0aXRsZSI6IkNvbnNvbGUgTGl2aW5nIFJvb20iLCJ1cmwiOiJcL2RldGFpbHNcL2NvbnNvbGVsaXZpbmdyb29tIn1dLCJmZWF0dXJlZExpbmtzIjpbeyJ0aXRsZSI6IkFsbCBzb2Z0d2FyZSIsInVybCI6IlwvZGV0YWlsc1wvc29mdHdhcmUifSx7InRpdGxlIjoiVGhpcyBKdXN0IEluIiwidXJsIjoiXC9zZWFyY2gucGhwP3F1ZXJ5PW1lZGlhdHlwZTpzb2Z0d2FyZSZzb3J0PS1wdWJsaWNkYXRlIn0seyJ0aXRsZSI6Ik9sZCBTY2hvb2wgRW11bGF0aW9uIiwidXJsIjoiXC9kZXRhaWxzXC90b3NlYyJ9LHsidGl0bGUiOiJNUy1ET1MgR2FtZXMiLCJ1cmwiOiJcL2RldGFpbHNcL3NvZnR3YXJlbGlicmFyeV9tc2Rvc19nYW1lcyJ9LHsidGl0bGUiOiJIaXN0b3JpY2FsIFNvZnR3YXJlIiwidXJsIjoiXC9kZXRhaWxzXC9oaXN0b3JpY2Fsc29mdHdhcmUifSx7InRpdGxlIjoiQ2xhc3NpYyBQQyBHYW1lcyIsInVybCI6IlwvZGV0YWlsc1wvY2xhc3NpY3BjZ2FtZXMifSx7InRpdGxlIjoiU29mdHdhcmUgTGlicmFyeSIsInVybCI6IlwvZGV0YWlsc1wvc29mdHdhcmVsaWJyYXJ5In1dLCJsaW5rcyI6W3sidGl0bGUiOiJLb2RpIEFyY2hpdmUgYW5kIFN1cHBvcnQgRmlsZSIsInVybCI6IlwvZGV0YWlsc1wva29kaV9hcmNoaXZlIn0seyJ0aXRsZSI6IlZpbnRhZ2UgU29mdHdhcmUiLCJ1cmwiOiJcL2RldGFpbHNcL3ZpbnRhZ2Vzb2Z0d2FyZSJ9LHsidGl0bGUiOiJBUEsiLCJ1cmwiOiJcL2RldGFpbHNcL2Fwa2FyY2hpdmUifSx7InRpdGxlIjoiTVMtRE9TIiwidXJsIjoiXC9kZXRhaWxzXC9zb2Z0d2FyZWxpYnJhcnlfbXNkb3MifSx7InRpdGxlIjoiQ0QtUk9NIFNvZnR3YXJlIiwidXJsIjoiXC9kZXRhaWxzXC9jZC1yb21zIn0seyJ0aXRsZSI6IkNELVJPTSBTb2Z0d2FyZSBMaWJyYXJ5IiwidXJsIjoiXC9kZXRhaWxzXC9jZHJvbXNvZnR3YXJlIn0seyJ0aXRsZSI6IlNvZnR3YXJlIFNpdGVzIiwidXJsIjoiXC9kZXRhaWxzXC9zb2Z0d2FyZXNpdGVzIn0seyJ0aXRsZSI6IlR1Y293cyBTb2Z0d2FyZSBMaWJyYXJ5IiwidXJsIjoiXC9kZXRhaWxzXC90dWNvd3MifSx7InRpdGxlIjoiU2hhcmV3YXJlIENELVJPTXMiLCJ1cmwiOiJcL2RldGFpbHNcL2NkYmJzYXJjaGl2ZSJ9LHsidGl0bGUiOiJTb2Z0d2FyZSBDYXBzdWxlcyBDb21waWxhdGlvbiIsInVybCI6IlwvZGV0YWlsc1wvc29mdHdhcmVjYXBzdWxlcyJ9LHsidGl0bGUiOiJDRC1ST00gSW1hZ2VzIiwidXJsIjoiXC9kZXRhaWxzXC9jZHJvbWltYWdlcyJ9LHsidGl0bGUiOiJaWCBTcGVjdHJ1bSIsInVybCI6IlwvZGV0YWlsc1wvc29mdHdhcmVsaWJyYXJ5X3p4X3NwZWN0cnVtIn0seyJ0aXRsZSI6IkRPT00gTGV2ZWwgQ0QiLCJ1cmwiOiJcL2RldGFpbHNcL2Rvb20tY2RzIn1dfSwidGV4dHMiOnsiaGVhZGluZyI6IkJvb2tzIiwiaWNvbkxpbmtzIjpbeyJ0aXRsZSI6IkJvb2tzIHRvIEJvcnJvdyIsImljb24iOiJodHRwczpcL1wvYXJjaGl2ZS5vcmdcL2ltYWdlc1wvYm9vay1sZW5kLnBuZyIsInVybCI6IlwvZGV0YWlsc1wvaW5saWJyYXJ5In0seyJ0aXRsZSI6Ik9wZW4gTGlicmFyeSIsImljb24iOiJodHRwczpcL1wvYXJjaGl2ZS5vcmdcL2ltYWdlc1wvd2lkZ2V0T0wucG5nIiwidXJsIjoiaHR0cHM6XC9cL29wZW5saWJyYXJ5Lm9yZ1wvIn1dLCJmZWF0dXJlZExpbmtzIjpbeyJ0aXRsZSI6IkFsbCBCb29rcyIsInVybCI6IlwvZGV0YWlsc1wvYm9va3MifSx7InRpdGxlIjoiQWxsIFRleHRzIiwidXJsIjoiXC9kZXRhaWxzXC90ZXh0cyJ9LHsidGl0bGUiOiJUaGlzIEp1c3QgSW4iLCJ1cmwiOiJcL3NlYXJjaC5waHA/cXVlcnk9bWVkaWF0eXBlOnRleHRzJnNvcnQ9LXB1YmxpY2RhdGUifSx7InRpdGxlIjoiU21pdGhzb25pYW4gTGlicmFyaWVzIiwidXJsIjoiXC9kZXRhaWxzXC9zbWl0aHNvbmlhbiJ9LHsidGl0bGUiOiJGRURMSU5LIChVUykiLCJ1cmwiOiJcL2RldGFpbHNcL2ZlZGxpbmsifSx7InRpdGxlIjoiR2VuZWFsb2d5IiwidXJsIjoiXC9kZXRhaWxzXC9nZW5lYWxvZ3kifSx7InRpdGxlIjoiTGluY29sbiBDb2xsZWN0aW9uIiwidXJsIjoiXC9kZXRhaWxzXC9saW5jb2xuY29sbGVjdGlvbiJ9XSwibGlua3MiOlt7InRpdGxlIjoiQW1lcmljYW4gTGlicmFyaWVzIiwidXJsIjoiXC9kZXRhaWxzXC9hbWVyaWNhbmEifSx7InRpdGxlIjoiQ2FuYWRpYW4gTGlicmFyaWVzIiwidXJsIjoiXC9kZXRhaWxzXC90b3JvbnRvIn0seyJ0aXRsZSI6IlVuaXZlcnNhbCBMaWJyYXJ5IiwidXJsIjoiXC9kZXRhaWxzXC91bml2ZXJzYWxsaWJyYXJ5In0seyJ0aXRsZSI6IlByb2plY3QgR3V0ZW5iZXJnIiwidXJsIjoiXC9kZXRhaWxzXC9ndXRlbmJlcmcifSx7InRpdGxlIjoiQ2hpbGRyZW4ncyBMaWJyYXJ5IiwidXJsIjoiXC9kZXRhaWxzXC9pYWNsIn0seyJ0aXRsZSI6IkJpb2RpdmVyc2l0eSBIZXJpdGFnZSBMaWJyYXJ5IiwidXJsIjoiXC9kZXRhaWxzXC9iaW9kaXZlcnNpdHkifSx7InRpdGxlIjoiQW5haGVpbSBQdWJsaWMgTGlicmFyeSIsInVybCI6IlwvZGV0YWlsc1wvYW5haGVpbXB1YmxpY2xpYnJhcnkifSx7InRpdGxlIjoiQm9va3MgYnkgTGFuZ3VhZ2UiLCJ1cmwiOiJcL2RldGFpbHNcL2Jvb2tzYnlsYW5ndWFnZSJ9LHsidGl0bGUiOiJBZGRpdGlvbmFsIENvbGxlY3Rpb25zIiwidXJsIjoiXC9kZXRhaWxzXC9hZGRpdGlvbmFsX2NvbGxlY3Rpb25zIn1dfSwid2ViIjp7Im1vYmlsZUFwcHNMaW5rcyI6W3sidXJsIjoiaHR0cHM6XC9cL2FwcHMuYXBwbGUuY29tXC91c1wvYXBwXC93YXliYWNrLW1hY2hpbmVcL2lkMTIwMTg4ODMxMyIsInRpdGxlIjoiV2F5YmFjayBNYWNoaW5lIChpT1MpIiwiZXh0ZXJuYWwiOnRydWV9LHsidXJsIjoiaHR0cHM6XC9cL3BsYXkuZ29vZ2xlLmNvbVwvc3RvcmVcL2FwcHNcL2RldGFpbHM/aWQ9Y29tLmFyY2hpdmUud2F5YmFja21hY2hpbmUmaGw9ZW5fVVMiLCJ0aXRsZSI6IldheWJhY2sgTWFjaGluZSAoQW5kcm9pZCkiLCJleHRlcm5hbCI6dHJ1ZX1dLCJicm93c2VyRXh0ZW5zaW9uc0xpbmtzIjpbeyJ1cmwiOiJodHRwczpcL1wvY2hyb21lLmdvb2dsZS5jb21cL3dlYnN0b3JlXC9kZXRhaWxcL3NhdmUtdG8tdGhlLXdheWJhY2stbWFjaGlcL2VlYnBpb2FhaWxiam9qbWRibWxwb21mZ2lqbmxjZW1rP2hsPWVuIiwidGl0bGUiOiJDaHJvbWUiLCJleHRlcm5hbCI6dHJ1ZX0seyJ1cmwiOiJodHRwczpcL1wvYWRkb25zLm1vemlsbGEub3JnXC9lbi1VU1wvZmlyZWZveFwvYWRkb25cL3dheWJhY2stbWFjaGluZV9uZXdcLyIsInRpdGxlIjoiRmlyZWZveCIsImV4dGVybmFsIjp0cnVlfSx7InVybCI6Imh0dHBzOlwvXC9hcHBzLmFwcGxlLmNvbVwvdXNcL2FwcFwvd2F5YmFjay1tYWNoaW5lXC9pZDE0NzI0MzI0MjI/bXQ9MTIiLCJ0aXRsZSI6IlNhZmFyaSIsImV4dGVybmFsIjp0cnVlfV0sImFyY2hpdmVJdExpbmtzIjpbeyJ1cmwiOiJodHRwczpcL1wvd3d3LmFyY2hpdmUtaXQub3JnXC9leHBsb3JlIiwidGl0bGUiOiJFeHBsb3JlIHRoZSBDb2xsZWN0aW9ucyJ9LHsidXJsIjoiaHR0cHM6XC9cL3d3dy5hcmNoaXZlLWl0Lm9yZ1wvYmxvZ1wvbGVhcm4tbW9yZVwvIiwidGl0bGUiOiJMZWFybiBNb3JlIn0seyJ1cmwiOiJodHRwczpcL1wvd3d3LmFyY2hpdmUtaXQub3JnXC9jb250YWN0LXVzIiwidGl0bGUiOiJCdWlsZCBDb2xsZWN0aW9ucyJ9XX0sInZpZGVvIjp7ImhlYWRpbmciOiJWaWRlbyIsImljb25MaW5rcyI6W3siaWNvbiI6Imh0dHBzOlwvXC9hcmNoaXZlLm9yZ1wvc2VydmljZXNcL2ltZ1wvdHYiLCJ0aXRsZSI6IlRWIE5ld3MiLCJ1cmwiOiJcL2RldGFpbHNcL3R2In0seyJpY29uIjoiaHR0cHM6XC9cL2FyY2hpdmUub3JnXC9zZXJ2aWNlc1wvaW1nXC85MTEiLCJ0aXRsZSI6IlVuZGVyc3RhbmRpbmcgOVwvMTEiLCJ1cmwiOiJcL2RldGFpbHNcLzkxMSJ9XSwiZmVhdHVyZWRMaW5rcyI6W3sidGl0bGUiOiJBbGwgdmlkZW8iLCJ1cmwiOiJcL2RldGFpbHNcL21vdmllcyJ9LHsidGl0bGUiOiJUaGlzIEp1c3QgSW4iLCJ1cmwiOiJcL3NlYXJjaC5waHA/cXVlcnk9bWVkaWF0eXBlOm1vdmllcyZzb3J0PS1wdWJsaWNkYXRlIn0seyJ0aXRsZSI6IlByZWxpbmdlciBBcmNoaXZlcyIsInVybCI6IlwvZGV0YWlsc1wvcHJlbGluZ2VyIn0seyJ0aXRsZSI6IkRlbW9jcmFjeSBOb3chIiwidXJsIjoiXC9kZXRhaWxzXC9kZW1vY3JhY3lfbm93X3ZpZCJ9LHsidGl0bGUiOiJPY2N1cHkgV2FsbCBTdHJlZXQiLCJ1cmwiOiJcL2RldGFpbHNcL29jY3VweXdhbGxzdHJlZXQifSx7InRpdGxlIjoiVFYgTlNBIENsaXAgTGlicmFyeSIsInVybCI6IlwvZGV0YWlsc1wvbnNhIn1dLCJsaW5rcyI6W3sidGl0bGUiOiJBbmltYXRpb24gJiBDYXJ0b29ucyIsInVybCI6IlwvZGV0YWlsc1wvYW5pbWF0aW9uYW5kY2FydG9vbnMifSx7InRpdGxlIjoiQXJ0cyAmIE11c2ljIiwidXJsIjoiXC9kZXRhaWxzXC9hcnRzYW5kbXVzaWN2aWRlb3MifSx7InRpdGxlIjoiQ29tcHV0ZXJzICYgVGVjaG5vbG9neSIsInVybCI6IlwvZGV0YWlsc1wvY29tcHV0ZXJzYW5kdGVjaHZpZGVvcyJ9LHsidGl0bGUiOiJDdWx0dXJhbCAmIEFjYWRlbWljIEZpbG1zIiwidXJsIjoiXC9kZXRhaWxzXC9jdWx0dXJhbGFuZGFjYWRlbWljZmlsbXMifSx7InRpdGxlIjoiRXBoZW1lcmFsIEZpbG1zIiwidXJsIjoiXC9kZXRhaWxzXC9lcGhlbWVyYSJ9LHsidGl0bGUiOiJNb3ZpZXMiLCJ1cmwiOiJcL2RldGFpbHNcL21vdmllc2FuZGZpbG1zIn0seyJ0aXRsZSI6Ik5ld3MgJiBQdWJsaWMgQWZmYWlycyIsInVybCI6IlwvZGV0YWlsc1wvbmV3c2FuZHB1YmxpY2FmZmFpcnMifSx7InRpdGxlIjoiU3Bpcml0dWFsaXR5ICYgUmVsaWdpb24iLCJ1cmwiOiJcL2RldGFpbHNcL3NwaXJpdHVhbGl0eWFuZHJlbGlnaW9uIn0seyJ0aXRsZSI6IlNwb3J0cyBWaWRlb3MiLCJ1cmwiOiJcL2RldGFpbHNcL3Nwb3J0cyJ9LHsidGl0bGUiOiJUZWxldmlzaW9uIiwidXJsIjoiXC9kZXRhaWxzXC90ZWxldmlzaW9uIn0seyJ0aXRsZSI6IlZpZGVvZ2FtZSBWaWRlb3MiLCJ1cmwiOiJcL2RldGFpbHNcL2dhbWV2aWRlb3MifSx7InRpdGxlIjoiVmxvZ3MiLCJ1cmwiOiJcL2RldGFpbHNcL3Zsb2dzIn0seyJ0aXRsZSI6IllvdXRoIE1lZGlhIiwidXJsIjoiXC9kZXRhaWxzXC95b3V0aF9tZWRpYSJ9XX0sInVzZXIiOlt7InVybCI6Imh0dHBzOlwvXC9hcmNoaXZlLm9yZ1wvY3JlYXRlIiwidGl0bGUiOiJVcGxvYWQiLCJhbmFseXRpY3NFdmVudCI6IlVzZXJVcGxvYWQifSx7InVybCI6IlwvZGV0YWlsc1wvQGpvc2VwaGNyb3NtYW5wbGF5cyIsInRpdGxlIjoiTXkgbGlicmFyeSIsImFuYWx5dGljc0V2ZW50IjoiVXNlckxpYnJhcnkifSx7InVybCI6IlwvZGV0YWlsc1wvQGpvc2VwaGNyb3NtYW5wbGF5cz90YWI9bG9hbnMiLCJ0aXRsZSI6Ik15IGxvYW5zIiwiYW5hbHl0aWNzRXZlbnQiOiJVc2VyTG9hbnMifSx7InVybCI6IlwvZGV0YWlsc1wvZmF2LWpvc2VwaGNyb3NtYW5wbGF5cyIsInRpdGxlIjoiTXkgZmF2b3JpdGVzIiwiYW5hbHl0aWNzRXZlbnQiOiJVc2VyRmF2b3JpdGVzIn0seyJ1cmwiOiJcL2RldGFpbHNcLyU0MGpvc2VwaGNyb3NtYW5wbGF5c1wvd2ViLWFyY2hpdmUiLCJ0aXRsZSI6Ik15IHdlYiBhcmNoaXZlIiwiYW5hbHl0aWNzRXZlbnQiOiJVc2VyV2ViQXJjaGl2ZSJ9LHsidXJsIjoiXC9hY2NvdW50XC9pbmRleC5waHA/c2V0dGluZ3M9MSIsInRpdGxlIjoiRWRpdCBzZXR0aW5ncyIsImFuYWx5dGljc0V2ZW50IjoiVXNlclNldHRpbmdzIn0seyJ1cmwiOiJodHRwczpcL1wvaGVscC5hcmNoaXZlLm9yZyIsInRpdGxlIjoiR2V0IGhlbHAiLCJhbmFseXRpY3NFdmVudCI6IlVzZXJIZWxwIn0seyJ1cmwiOiJcL2FjY291bnRcL2xvZ291dCIsInRpdGxlIjoiTG9nIG91dCIsImFuYWx5dGljc0V2ZW50IjoiVXNlckxvZ091dCJ9XX0=">
+                                                            </ia-topnav>
+
+                  </div>
+            <input class="js-tvsearch" type="hidden" value="{&quot;ands&quot;:[],&quot;minday&quot;:&quot;06/04/2009&quot;,&quot;maxday&quot;:&quot;02/16/2021&quot;}">
+    
+        
+    <div class="search-toolbar">
+  <div id="donation-link" class="web_message">
+  <a href="http://archive.org/donate/" data-event-click-tracking="Wayback|DonateButton" class="beta_button">DONATE</a>
+</div>
+
+  <div class="search-toolbar-logo-container">
+    <a href="/"><div class="search-toolbar-logo" alt="logo: Internet Archive's Wayback Machine"></div></a>
+  </div>
+  <form name="form1" class="search-toolbar-input-container" method="get" action="http://web.archive.org/web/submit">
+    <input type="hidden" name="type" value="urlquery">
+    <input type="text" name="url" value="http://www.anifire.com/animation/" size="40" onfocus="javascript:this.focus();this.select();">
+    <button type="submit" name="Submit">Go Wayback!</button>
+  </form>
+</div>
+<div class="container">
+  <h2 id="query-summary" style="visibility: visible; opacity: 1;">there are # sites to visit!</h2>
+  <div id="resultsUrl_wrapper" class="dataTables_wrapper no-footer"><div id="resultsUrl_filter" class="dataTables_filter"><label>Filter results (i.e. '.txt'):<input type="search" class="" placeholder="URL or MIME Type" aria-controls="resultsUrl"></label></div><table id="resultsUrl" class="dataTable no-footer" role="grid" aria-describedby="resultsUrl_info">
+    <thead>
+      <tr role="row"><th class="url sorting_asc" tabindex="0" aria-controls="resultsUrl" rowspan="1" colspan="1" aria-label="URL: activate to sort column descending" aria-sort="ascending">URL</th><th class="mimetype sorting" tabindex="0" aria-controls="resultsUrl" rowspan="1" colspan="1" aria-label="MIME Type: activate to sort column ascending">MIME Type</th><th class="dateFrom sorting" tabindex="0" aria-controls="resultsUrl" rowspan="1" colspan="1" aria-label="From: activate to sort column ascending">From</th><th class="dateTo sorting" tabindex="0" aria-controls="resultsUrl" rowspan="1" colspan="1" aria-label="To: activate to sort column ascending">To</th><th class="captures sorting" tabindex="0" aria-controls="resultsUrl" rowspan="1" colspan="1" aria-label="Captures: activate to sort column ascending">Captures</th><th class="dupes sorting" tabindex="0" aria-controls="resultsUrl" rowspan="1" colspan="1" aria-label="Duplicates: activate to sort column ascending">Duplicates</th><th class="uniques sorting" tabindex="0" aria-controls="resultsUrl" rowspan="1" colspan="1" aria-label="Uniques: activate to sort column ascending">Uniques</th></tr>
+    </thead>
+    <tbody>
+    <tr role="row" class="odd"><td class="url sorting_1"><a href="http://josephcrosmanplays532.github.io/goanimate-beta-server/animation/">http://josephcrosmanplays532.github.io/goanimate-beta-server/animation/</a></td><td class=" mimetype">text/html</td><td class=" dateFrom">Feb 16, 2021</td><td class=" dateTo">Feb 16, 2021</td><td class=" captures">1</td><td class=" dupes">0</td><td class=" uniques">1</td></tr></tbody>
+  </table><div class="dataTables_info" id="resultsUrl_info" role="status" aria-live="polite">Showing 1 to 1 of 1 entries</div><div class="dataTables_paginate paging_full_numbers" id="resultsUrl_paginate"><a class="paginate_button first disabled" aria-controls="resultsUrl" data-dt-idx="0" tabindex="0" id="resultsUrl_first">First</a><a class="paginate_button previous disabled" aria-controls="resultsUrl" data-dt-idx="1" tabindex="0" id="resultsUrl_previous">Previous</a><span><a class="paginate_button current" aria-controls="resultsUrl" data-dt-idx="2" tabindex="0">1</a></span><a class="paginate_button next disabled" aria-controls="resultsUrl" data-dt-idx="3" tabindex="0" id="resultsUrl_next">Next</a><a class="paginate_button last disabled" aria-controls="resultsUrl" data-dt-idx="4" tabindex="0" id="resultsUrl_last">Last</a></div></div>
+    <noscript>
+      <div class="no-script-message">
+        The Wayback Machine requires your browser to support JavaScript, please email <a href="mailto:info@archive.org">info@archive.org</a><br/>if you have any questions about this.
+      </div>
+    </noscript>
+    <footer>
+      <div id="footerHome">
+        <p>
+          The Wayback Machine is an initiative of the
+          <a href="//archive.org/">Internet Archive</a>,
+          a 501(c)(3) non-profit, building a digital library of
+          Internet sites and other cultural artifacts in digital form.
+          <br>Other <a href="//archive.org/projects/">projects</a> include
+          <a href="https://openlibrary.org/">Open Library</a> &amp;
+          <a href="https://archive-it.org">archive-it.org</a>.
+        </p>
+        <p>
+          Your use of the Wayback Machine is subject to the Internet Archive's
+          <a href="https://archive.org/about/terms.php">Terms of Use</a>.
+        </p>
+      </div>
+    </footer>
+  
+</div></body></html>
