@@ -1,0 +1,115 @@
+<html><script type="text/javascript" class="__REQUESTLY__SCRIPT">(function(namespace) {
+  window[namespace] = window[namespace] || {};
+  window[namespace].responseRules = {};
+
+  let open = XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open = function(method) {
+    this.addEventListener('readystatechange', function() {
+      if (this.readyState === 4 && window[namespace].responseRules.hasOwnProperty(this.responseURL)) {
+        const responseRule = window[namespace].responseRules[this.responseURL];
+        const {response, id} = responseRule;
+        const responseType = this.responseType;
+        let customResponse;
+
+        customResponse = response.type === 'code' ? responseRule.evaluator({
+            method,
+            url: this.responseURL,
+            requestHeaders: this.requestHeaders,
+            requestData: this.requestData,
+            responseType: this.responseType,
+            response: this.response
+          }) : response.value;
+
+        Object.defineProperty(this, 'response', {
+          get: function () {
+            if (response.type === 'static' && responseType === 'json') {
+              return JSON.parse(customResponse);
+            }
+            return customResponse;
+          }
+        });
+
+        if (responseType === '' || responseType === 'text') {
+          Object.defineProperty(this, 'responseText', {
+            get: function () {
+              return customResponse;
+            }
+          });
+        }
+
+        window.postMessage({
+          from: 'requestly',
+          type: 'response_rule_applied',
+          id
+        }, window.location.href);
+      }
+    }, false);
+    open.apply(this, arguments);
+  };
+
+  let send = XMLHttpRequest.prototype.send;
+  XMLHttpRequest.prototype.send = function(data) {
+    this.requestData = data;
+    send.apply(this, arguments);
+  };
+
+  let setRequestHeader = XMLHttpRequest.prototype.setRequestHeader;
+  XMLHttpRequest.prototype.setRequestHeader = function(header, value) {
+    this.requestHeaders = this.requestHeaders || {};
+    this.requestHeaders[header] = value;
+    setRequestHeader.apply(this, arguments);
+  }
+})('__REQUESTLY__')</script><head><script src="//archive.org/includes/analytics.js?v=cf34f82" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app202.us.archive.org';v.server_ms=797;archive_analytics.send_pageview({});});</script><script type="text/javascript" src="/_static/js/playback.bundle.js?v=bQvHU8mx" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/wombat.js?v=cRqOKCOw" charset="utf-8"></script>
+<script type="text/javascript">
+  __wm.init("http://web.archive.org/web");
+  __wm.wombat("http://www.anifire.com:80/animation/","20070612121704","http://web.archive.org/","web","/_static/",
+	      "1181650624");
+</script>
+<link rel="stylesheet" type="text/css" href="/_static/css/banner-styles.css?v=bsmaklHF">
+<link rel="stylesheet" type="text/css" href="/_static/css/iconochive.css?v=qtvMKcIJ">
+<!-- End Wayback Rewrite JS Include -->
+
+  <title>Index of /animation</title>
+ </head>
+ <body>
+<h1>Index of /animation</h1>
+<pre>      <a href="name">Name</a>                    <a href="lastcreated">Last modified</a>      <a href="size">Size</a>  <a href="description>Description</a><hr>      <a href="https://josephcrosmanplays532.github.io/goanimate-beta-server/">Parent Directory</a>                             -   
+      <a href="alvin.bp.nyc.swf">alvin.bp.nyc.swf</a>        02-Mar-2007 19:20   28K  
+      <a href="alvin.bp.vc.swf">alvin.bp.vc.swf</a>         02-Mar-2007 19:20   28K  
+      <a href="alvin.bpstable.swf">alvin.bpstable.swf</a>      02-Mar-2007 19:20   28K  
+      <a href="alvin.nyc3.swf">alvin.nyc3.swf</a>          02-Mar-2007 19:48   28K  
+      <a href="alvin.nyc3.swf.mac">alvin.nyc3.swf.mac</a>      02-Mar-2007 19:20   28K  
+      <a href="animation-lib.swf">animation-lib.swf</a>       02-Mar-2007 19:20  192K  
+      <a href="animation.swf">animation.swf</a>           02-Mar-2007 19:20  8.6K  
+      <a href="bp-NYC.htm">bp-NYC.htm</a>              02-Mar-2007 19:55  468   
+      <a href="bp.htm">bp.htm</a>                  02-Mar-2007 19:20  490   
+      <a href="fart.htm">fart.htm</a>                02-Mar-2007 19:20  483   
+      <a href="fart.swf">fart.swf</a>                02-Mar-2007 19:21  166K  
+      <a href="swfobject.js">swfobject.js</a>            02-Mar-2007 19:21  6.6K  
+<hr></pre>
+
+<!--
+     FILE ARCHIVED ON 12:17:04 Jun 12, 2007 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 22:34:49 Feb 16, 2021.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 693.358
+  exclusion.robots: 233.468
+  exclusion.robots.policy: 233.447
+  xauthn.identify: 163.583
+  xauthn.chkprivs: 69.462
+  RedisCDXSource: 2.152
+  esindex: 0.012
+  LoadShardBlock: 436.73 (3)
+  PetaboxLoader3.datanode: 59.465 (4)
+  CDXLines.iter: 18.026 (3)
+  load_resource: 98.757
+  PetaboxLoader3.resolve: 69.519
+--></body></html>
